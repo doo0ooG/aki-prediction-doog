@@ -5,9 +5,9 @@
 
 ## 第负一部分：文件结构介绍
 
-`./sql/first/` 内的 `sql` 脚本引用自 [MIT-LCP/mimic-code](https://github.com/MIT-LCP/mimic-code)（记得给作者点个 star）；其中 `icustay_detail.sql` 进行了修改。
+`./sql/first/` 内的 `sql` 脚本引用自 [MIT-LCP/mimic-code](https://github.com/MIT-LCP/mimic-code)（记得点进去给作者点个 star）；其中 `icustay_detail.sql` 进行了修改。
 
-`./sql/second/` 内的脚本引用自 [mapo89/continuous-aki-predict](https://github.com/mapo89/continuous-aki-predict/tree/main)（也记得给作者点个 star）。
+`./sql/second/` 内的脚本引用自 [mapo89/continuous-aki-predict](https://github.com/mapo89/continuous-aki-predict/tree/main)（也记得点进去给作者点个 star）。
 
 ## 第零部分：环境准备
 
@@ -103,6 +103,8 @@ WITH CSV HEADER DELIMITER ';';
 ### 2. 非结构化文本（临床笔记等）的预处理与数据集构建
 
 ### 3. 下载预训练模型
+- 运行`./preprocessing/get_clinicalBert.ipynb`
+- 代码会从`hugging face`上下载模型并保存到`./BERT_model/clinicalbert/`目录下
 
 ---
 

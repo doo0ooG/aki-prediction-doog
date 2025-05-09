@@ -26,3 +26,6 @@
 *.bin
 *.dat
 *.sav
+
+# 从huggingface上下载的模型也别push到仓库里
+BERT_model/
