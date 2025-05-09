@@ -70,7 +70,7 @@ vitals.sql
 sedativedurations.sql  
 ventilations_at_kdigo_stages_labs_vitals_charttime.sql  
 vasopressor_at_kdigo_stages_labs_vitals_charttime.sql  
-sedativedurations.sql  
+sedatives_at_kdigo_stages_labs_vitals_charttime.sql 
 extract_data.sql  
 ```
 
