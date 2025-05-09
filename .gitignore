@@ -1,0 +1,28 @@
+# Ignore data files
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.json
+*.xml
+*.txt
+
+# Ignore model files
+*.pt
+*.pth
+*.pkl
+*.joblib
+*.h5
+*.ckpt
+*.npz
+*.npy
+
+# Ignore other possible large/binary data files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+*.bin
+*.dat
+*.sav
