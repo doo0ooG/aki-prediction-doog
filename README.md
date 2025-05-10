@@ -110,7 +110,42 @@ WITH CSV HEADER DELIMITER ';';
 
 ## 第三部分：使用 ClinicalBERT 对文本进行词嵌入
 
-**注：如需微调 BERT，请直接跳过第三、第四部分。**
+**注意：若计划对 BERT 模型进行微调，请跳过本节和下一节的处理流程。**
+
+* 请依次执行 `./src_bert_embedding.ipynb` 中的所有代码块。在此基础上，你可以对提取出的文本进行进一步清洗或定制化预处理，以提高嵌入效果。
+
+* 由于 BERT 模型对输入长度有限制（最多 512 个 token），因此需要对超长文本进行分段处理。
+
+* 首先，对于每个样本（由患者 ID 与住院 ID 唯一标识），其对应的原始文本通常包含 3000+ 单词，token 数量常常超过 4000。为降低输入长度，我们仅保留该样本中**最新的一条文本记录**用于建模。
+
+* 经上述筛选后，我们在验证集上随机抽取了 5% 样本进行统计，发现每个样本的 token 数量均值为 295，最大值高达 8527，仍存在严重的超长问题。因此，我们采用**滑动窗口（sliding window）机制**对文本进行处理：
+
+  * 若 token 数不足 256，则进行 `padding` 补齐；
+  * 若超过 256，则采用窗口长度为 256、步长为 256 的滑动策略，生成多组 `input_ids` 和对应的 `attention_mask`。
+
+| 指标  | 数值      |
+| --- | ------- |
+| 最大值 | 8527    |
+| 平均值 | 295.314 |
+
+**图示：验证集中 5% 样本的单词数量分布**
+
+![验证集采样5%的单词数分布图](./img/why_sliding_windows.png)
+
+**图示：滑动窗口机制处理长文本的示意图**
+（图源：[Simon Gsponer's blog](https://medium.com/@simon.gsponer/a-comprehensive-guide-using-a-bert-llm-on-texts-exceeding-the-maximum-input-size-47d1b72e397f)）
+
+![sliding\_windows示意图](./img/sliding_windows.png)
+
+---
+
+**补充说明**：由于计算资源限制，目前仅选用了每个样本中**最新的一条记录**进行词嵌入，这在一定程度上减少了文本长度，也导致滑动窗口切分出的 `chunk` 数量相对较少。但你也可以选择保留每个样本的**全部文本记录**，从而获得一个维度为 $[chunks * window_size]$ 的输入矩阵。
+
+* 此时，可以考虑进一步使用 **CNN** 提取跨片段特征（详见论文：[Chunking and Convolution for Efficient Long Text Classification with BERT](https://arxiv.org/pdf/2310.20558)）；
+* 或者基于 chunks 的时间顺序结构，引入 **LSTM** 或 **Transformer** 等结构建模全局上下文。
+
+这种方法不仅提升了上下文利用率，也为后续多模态融合提供了更强的表达能力。
+
 
 ---
 
