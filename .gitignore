@@ -6,6 +6,8 @@
 *.json
 *.xml
 *.txt
+# 但允许 requirements.txt 被上传
+!requirements.txt
 
 # Ignore model files
 *.pt
